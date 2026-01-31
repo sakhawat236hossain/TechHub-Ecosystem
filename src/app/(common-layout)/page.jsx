@@ -1,5 +1,6 @@
 import AdSection from "@/components/HomePage/AdSection/AdSection";
 import FeaturedCategories from "@/components/HomePage/FeaturedCategories/FeaturedCategories";
+import FlashSale from "@/components/HomePage/FlashSale/FlashSale";
 import HeroSection from "@/components/HomePage/HeroSection/HeroSection";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <div className="max-w-7xl mx-auto">
         <FeaturedCategories />
         <AdSection></AdSection>
+        <FlashSale></FlashSale>
       </div>
     </main>
   );
