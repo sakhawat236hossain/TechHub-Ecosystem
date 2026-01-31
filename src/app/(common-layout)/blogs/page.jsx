@@ -207,9 +207,8 @@ Galaxy Ring 2-এর সবচেয়ে বড় চমক হলো এর 'Gestu
 ];
 
 const TechFeed = () => {
-return (
+  return (
     <main className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-500 pt-32 pb-20">
-      
       {/* Page Header */}
       <div className="max-w-5xl mx-auto px-6 mb-20">
         <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter uppercase leading-none">
@@ -251,8 +250,12 @@ return (
             {/* Right Side: Detailed Content */}
             <div className="md:col-span-8 lg:col-span-9 space-y-8">
               <div className="flex items-center gap-6 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-                <span className="flex items-center gap-2"><Calendar size={14} className="text-blue-600" /> {post.date}</span>
-                <span className="flex items-center gap-2"><Clock size={14} className="text-blue-600" /> {post.readTime}</span>
+                <span className="flex items-center gap-2">
+                  <Calendar size={14} className="text-blue-600" /> {post.date}
+                </span>
+                <span className="flex items-center gap-2">
+                  <Clock size={14} className="text-blue-600" /> {post.readTime}
+                </span>
               </div>
 
               {/* Stylish Highlighted Title */}
@@ -273,19 +276,30 @@ return (
                     {post.author[0]}
                   </div>
                   <div>
-                    <p className="text-sm font-black text-gray-900 dark:text-white leading-none mb-1">{post.author}</p>
-                    <p className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">Verified Tech Journalist</p>
+                    <p className="text-sm font-black text-gray-900 dark:text-white leading-none mb-1">
+                      {post.author}
+                    </p>
+                    <p className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">
+                      Verified Tech Journalist
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-8">
                   <button className="group/btn flex items-center gap-2 text-gray-400 hover:text-red-500 transition-all duration-300 transform hover:-translate-y-1">
                     <Heart size={22} className="group-hover/btn:fill-red-500" />
-                    <span className="text-xs font-black uppercase tracking-widest">Like</span>
+                    <span className="text-xs font-black uppercase tracking-widest">
+                      Like
+                    </span>
                   </button>
                   <button className="group/btn flex items-center gap-2 text-gray-400 hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1">
-                    <MessageCircle size={22} className="group-hover/btn:fill-blue-600" />
-                    <span className="text-xs font-black uppercase tracking-widest">Chat</span>
+                    <MessageCircle
+                      size={22}
+                      className="group-hover/btn:fill-blue-600"
+                    />
+                    <span className="text-xs font-black uppercase tracking-widest">
+                      Chat
+                    </span>
                   </button>
                 </div>
               </div>
