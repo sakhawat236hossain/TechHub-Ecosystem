@@ -11,17 +11,33 @@ import WhyChooseUs from "@/components/HomePage/WhyChooseUs/WhyChooseUs";
 export default function Home() {
   return (
     <main className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-300">
+      {/* Main attraction and call to action */}
       <HeroSection />
       
-      <div className="max-w-7xl mx-auto">
+      {/* Building trust by showing associated brands early */}
+      <BrandSlider />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Navigation by categories */}
         <FeaturedCategories />
-        <AdSection></AdSection>
-        <FlashSale></FlashSale>
-        <LatestProducts></LatestProducts>
-        <WhyChooseUs></WhyChooseUs>
-        <BrandSlider></BrandSlider>
-        <BlogSection></BlogSection>
-        <Newsletter></Newsletter>
+
+        {/* High urgency section to drive quick sales */}
+        <FlashSale />
+
+        {/* Regular new arrivals */}
+        <LatestProducts />
+
+        {/* Promotional banner placement between product grids */}
+        <AdSection />
+
+        {/* Value proposition to convince the customer */}
+        <WhyChooseUs />
+
+        {/* Engagement and SEO through technical articles */}
+        <BlogSection />
+
+        {/* Capturing leads before the user leaves the page */}
+        <Newsletter />
       </div>
     </main>
   );

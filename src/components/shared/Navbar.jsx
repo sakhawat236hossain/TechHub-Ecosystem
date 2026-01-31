@@ -8,86 +8,121 @@ import Logo from '../common/Logo';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Reusable nav links to keep code DRY (Don't Repeat Yourself)
+  const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'All Products', href: '/products' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Dashboard', href: '/dashboard' },
+  ];
+
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-gray-100 dark:border-zinc-800 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           
-          {/* Logo */}
+          {/* Brand Logo */}
           <div className="flex-shrink-0 flex items-center">
-           <Logo></Logo>
+            <Logo />
           </div>
 
-          {/* Desktop Menu */}
+          {/* Desktop Navigation Links */}
           <div className="hidden md:flex space-x-8 items-center">
-            <Link href="/" className="text-gray-600 hover:text-blue-600 font-medium transition">Home</Link>
-            <Link href="/products" className="text-gray-600 hover:text-blue-600 font-medium transition">All Products</Link>
-            <Link href="/dashboard" className="text-gray-600 hover:text-blue-600 font-medium transition">Dashboard</Link>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name} 
+                href={link.href} 
+                className="text-sm font-black uppercase tracking-widest text-gray-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors"
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
 
-          {/* Right Icons */}
-          <div className="flex items-center space-x-3 md:space-x-5">
-            <Link href="/cart" className="text-gray-600 hover:text-blue-600 relative p-2">
+          {/* User Actions & Mobile Toggle */}
+          <div className="flex items-center space-x-4 md:space-x-6">
+            {/* Shopping Cart */}
+            <Link href="/cart" className="text-gray-600 dark:text-zinc-400 hover:text-blue-600 relative p-2 transition-colors">
               <ShoppingCart size={22} />
-              <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-bold">0</span>
+              <span className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-bold">0</span>
             </Link>
 
-            <Link href="/login" className="hidden sm:flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md">
+            {/* Login Button (Desktop) */}
+            <Link href="/login" className="hidden sm:flex items-center gap-2 bg-blue-600 text-white px-6 py-2.5 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
               <User size={18} />
-              <span className="text-sm font-semibold">Login</span>
+              <span className="text-xs font-black uppercase tracking-widest">Login</span>
             </Link>
 
-            {/* Mobile Toggle Button */}
-            <div className="md:hidden">
-              <button onClick={() => setIsOpen(true)} className="text-gray-700 p-1">
-                <Menu size={28} />
-              </button>
-            </div>
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setIsOpen(true)} 
+              className="md:hidden text-gray-700 dark:text-zinc-400 p-1 hover:text-blue-600 transition-colors"
+            >
+              <Menu size={28} />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer (Right Side) */}
+      {/* Mobile Sidebar Drawer */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Dark Overlay */}
+            {/* Backdrop Overlay */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/50 z-[60] md:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] md:hidden"
             />
 
-            {/* Side Menu */}
+            {/* Drawer Content */}
             <motion.div 
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-[280px] bg-white z-[70] shadow-2xl p-6 md:hidden"
+              className="fixed right-0 top-0 h-full w-[300px] bg-white dark:bg-zinc-900 z-[70] shadow-2xl p-8 md:hidden flex flex-col"
             >
-              <div className="flex justify-between items-center mb-10">
-                <span className="text-xl font-bold text-blue-600">Menu</span>
-                <button onClick={() => setIsOpen(false)} className="text-gray-500 p-1">
-                  <X size={28} />
+              <div className="flex justify-between items-center mb-12">
+                <Logo />
+                <button onClick={() => setIsOpen(false)} className="text-gray-500 dark:text-zinc-400 p-1 hover:rotate-90 transition-transform duration-300">
+                  <X size={32} />
                 </button>
               </div>
 
-              <div className="flex flex-col space-y-6 text-lg font-medium">
-                <Link href="/" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-blue-600">Home</Link>
-                <Link href="/products" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-blue-600">All Products</Link>
-                <Link href="/dashboard" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-blue-600">Dashboard</Link>
-                <hr className="border-gray-100" />
+              {/* Mobile Links List */}
+              <div className="flex flex-col space-y-6">
+                {navLinks.map((link) => (
+                  <Link 
+                    key={link.name} 
+                    href={link.href} 
+                    onClick={() => setIsOpen(false)} 
+                    className="text-lg font-black uppercase tracking-tighter text-gray-800 dark:text-zinc-200 hover:text-blue-600 transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                
+                <hr className="border-gray-100 dark:border-zinc-800 my-4" />
+                
                 <Link 
                   href="/login" 
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-xl font-bold"
+                  className="flex items-center justify-center gap-3 bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-blue-600/20"
                 >
                   <User size={20} />
-                  Login
+                  Login to Account
                 </Link>
+              </div>
+
+              {/* Footer info in Sidebar */}
+              <div className="mt-auto">
+                <p className="text-[10px] text-gray-400 dark:text-zinc-600 font-bold uppercase tracking-[0.2em] text-center">
+                  © 2026 TECHHUB ECOSYSTEM
+                </p>
               </div>
             </motion.div>
           </>
