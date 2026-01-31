@@ -5,6 +5,7 @@ import FeaturedCategories from "@/components/HomePage/FeaturedCategories/Feature
 import FlashSale from "@/components/HomePage/FlashSale/FlashSale";
 import HeroSection from "@/components/HomePage/HeroSection/HeroSection";
 import LatestProducts from "@/components/HomePage/LatestProducts/LatestProducts";
+import Newsletter from "@/components/HomePage/Newsletter/Newsletter";
 import WhyChooseUs from "@/components/HomePage/WhyChooseUs/WhyChooseUs";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
         <WhyChooseUs></WhyChooseUs>
         <BrandSlider></BrandSlider>
         <BlogSection></BlogSection>
+        <Newsletter></Newsletter>
       </div>
     </main>
   );
