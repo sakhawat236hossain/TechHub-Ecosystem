@@ -3,6 +3,7 @@ import FeaturedCategories from "@/components/HomePage/FeaturedCategories/Feature
 import FlashSale from "@/components/HomePage/FlashSale/FlashSale";
 import HeroSection from "@/components/HomePage/HeroSection/HeroSection";
 import LatestProducts from "@/components/HomePage/LatestProducts/LatestProducts";
+import WhyChooseUs from "@/components/HomePage/WhyChooseUs/WhyChooseUs";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <AdSection></AdSection>
         <FlashSale></FlashSale>
         <LatestProducts></LatestProducts>
+        <WhyChooseUs></WhyChooseUs>
       </div>
     </main>
   );
