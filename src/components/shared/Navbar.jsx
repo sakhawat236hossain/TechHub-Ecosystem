@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ShoppingCart, User, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from '../common/Logo';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,10 +15,7 @@ const Navbar = () => {
           
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-xl md:text-2xl font-bold text-blue-600 flex items-center gap-2">
-              <span className="bg-blue-600 text-white px-2 py-1 rounded-lg text-lg">TH</span>
-              <span className="tracking-tight">TechHub</span>
-            </Link>
+           <Logo></Logo>
           </div>
 
           {/* Desktop Menu */}
