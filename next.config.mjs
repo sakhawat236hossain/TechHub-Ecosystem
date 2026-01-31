@@ -11,6 +11,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'cdn.worldvectorlogo.com', 
       },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com', 
+      },
         ],
       },
 };

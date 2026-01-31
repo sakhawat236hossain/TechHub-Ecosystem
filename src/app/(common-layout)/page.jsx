@@ -1,4 +1,5 @@
 import AdSection from "@/components/HomePage/AdSection/AdSection";
+import BlogSection from "@/components/HomePage/BlogSection/BlogSection";
 import BrandSlider from "@/components/HomePage/BrandSlider/BrandSlider";
 import FeaturedCategories from "@/components/HomePage/FeaturedCategories/FeaturedCategories";
 import FlashSale from "@/components/HomePage/FlashSale/FlashSale";
@@ -18,6 +19,7 @@ export default function Home() {
         <LatestProducts></LatestProducts>
         <WhyChooseUs></WhyChooseUs>
         <BrandSlider></BrandSlider>
+        <BlogSection></BlogSection>
       </div>
     </main>
   );
