@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-// ১. ফাংশনের নাম অবশ্যই 'proxy' হতে হবে (Next.js 16+ কনভেনশন)
-export async function proxy(request) {
+ export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
   const token = await getToken({
