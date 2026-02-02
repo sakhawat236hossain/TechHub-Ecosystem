@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-async function proxy(request) {
+// ১. ফাংশনের নাম অবশ্যই 'proxy' হতে হবে (Next.js 16+ কনভেনশন)
+export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
   const token = await getToken({
@@ -9,15 +10,21 @@ async function proxy(request) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  console.log("Next.js Proxy handling:", pathname);
+
   const isProtectedRoute =
-    pathname.startsWith("/booking") || pathname.startsWith("/my-bookings");
+    pathname.startsWith("/dashboard") || 
+    pathname.startsWith("/booking") || 
+    pathname.startsWith("/vendor") || 
+    pathname.startsWith("/admin");
 
   if (isProtectedRoute && !token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  const isAuthPage =
-    pathname.startsWith("/login") || pathname.startsWith("/register");
+  const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register");
   if (isAuthPage && token) {
     return NextResponse.redirect(new URL("/", request.url));
   }
@@ -25,8 +32,13 @@ async function proxy(request) {
   return NextResponse.next();
 }
 
-export default proxy;
-
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/register"],
+  matcher: [
+    "/dashboard/:path*",
+    "/booking/:path*",
+    "/vendor/:path*",
+    "/admin/:path*",
+    "/login",
+    "/register"
+  ],
 };
