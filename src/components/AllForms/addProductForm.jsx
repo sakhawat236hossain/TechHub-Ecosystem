@@ -1,18 +1,19 @@
 "use client";
-import React, { useState } from "react"; // Added useState for loading
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
-
-import axios from "axios"; // Added axios
+import axios from "axios";
+import { useSession } from "next-auth/react"; // ইউজারের ডাটা পাওয়ার জন্য
 import {
   PackagePlus, UploadCloud, Phone, Monitor, Truck, Info,
   ShieldAlert, Cpu, Tag, Briefcase, DollarSign, Image as ImageIcon,
-  Loader2 // Added Loader icon
+  Loader2
 } from "lucide-react";
 import { uploadImageToCloudinary } from "@/utils";
 
 const AddProductForm = () => {
-  const [loading, setLoading] = useState(false); // Loading state
+  const { data: session } = useSession(); // লগইন করা ইউজারের সেশন ডাটা
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -33,44 +34,57 @@ const AddProductForm = () => {
   const categories = ["Laptop", "Smartphone", "Desktop PC", "Gaming Console", "Smart Watch", "Audio & Headphones", "Camera & Optics", "PC Components", "Monitors", "Networking Devices", "Storage (SSD/HDD)", "Peripherals (Keyboard/Mouse)"];
 
   // --- Main Submit Logic ---
-
-const onSubmit = async (data) => {
-  const toastId = toast.loading("Deploying product to TechHub..."); 
-
-  try {
-    setLoading(true);
-
-    const imageUrls = [];
-    for (const file of data.files) {
-      const url = await uploadImageToCloudinary(file);
-      if (url) imageUrls.push(url);
+  const onSubmit = async (data) => {
+    if (!session) {
+      toast.error("You must be logged in to deploy assets!");
+      return;
     }
 
-    const finalProductData = {
-      productName: data.productName,
-      brand: data.brand,
-      category: data.category,
-      condition: data.condition,
-      price: Number(data.price),
-      phone: data.phone,
-      warranty: data.warranty,
-      description: data.description,
-      images: imageUrls,
-    };
+    const toastId = toast.loading("Deploying product to TechHub..."); 
 
-    const response = await axios.post("/api/vendor/products/post", finalProductData);
+    try {
+      setLoading(true);
 
-    if (response.data.success) {
-      toast.success("🔥 Product deployed successfully!", { id: toastId });
-      reset(); 
+      const imageUrls = [];
+      for (const file of data.files) {
+        if (file) {
+          const url = await uploadImageToCloudinary(file);
+          if (url) imageUrls.push(url);
+        }
+      }
+
+    
+      const finalProductData = {
+        productName: data.productName,
+        brand: data.brand,
+        category: data.category,
+        condition: data.condition,
+        price: Number(data.price),
+        phone: data.phone,
+        warranty: data.warranty,
+        description: data.description,
+        images: imageUrls,
+        sellerEmail: session.user?.email,
+        sellerName: session.user?.name,
+        sellerImage: session.user?.image,
+        postedAt: new Date().toISOString(),
+      };
+
+      const response = await axios.post("/api/vendor/products/post", finalProductData);
+
+      if (response.data.success) {
+        toast.success("🔥 Product deployed successfully!", { id: toastId });
+        reset(); 
+      } else {
+        throw new Error(response.data.message || "Failed to post");
+      }
+    } catch (error) {
+      console.error("❌ Error:", error);
+      toast.error(error.response?.data?.message || "Deployment failed. Please try again.", { id: toastId });
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error("❌ Error:", error);
-    toast.error("Deployment failed. Please try again.", { id: toastId });
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const onError = (validationErrors) => console.log("❌ Validation Failed:", validationErrors);
 
@@ -90,7 +104,7 @@ const onSubmit = async (data) => {
           Add <span className="text-blue-600">Product</span>
         </h2>
         <p className="text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest mt-2 italic">
-          Asset Deployment Console
+          Asset Deployment Console by {session?.user?.name || "Guest"}
         </p>
       </header>
 
@@ -195,12 +209,12 @@ const onSubmit = async (data) => {
           <textarea
             rows="8"
             {...register("description", { required: true, minLength: 50 })}
-            placeholder="Describe the product specs..."
+            placeholder="Describe the product specs in detail..."
             className="premium-input border-gray-300 dark:border-zinc-700 min-h-[200px]"
           ></textarea>
         </section>
 
-        {/* SUBMIT BUTTON WITH LOADING */}
+        {/* SUBMIT BUTTON */}
         <button
           type="submit"
           disabled={loading}
@@ -214,6 +228,7 @@ const onSubmit = async (data) => {
         </button>
       </form>
 
+      {/* Internal CSS for Premium UI */}
       <style jsx>{`
         .premium-input {
           width: 100%;

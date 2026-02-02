@@ -31,7 +31,7 @@ export const authOptions = {
         if (!isPasswordValid) {
           throw new Error("Invalid password");
         }
-
+j
         return {
           id: user._id.toString(),
           name: user.name,
