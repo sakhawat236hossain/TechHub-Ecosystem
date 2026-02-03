@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react"; // ১. সেশন ইমপোর্ট করুন
+import { useSession } from "next-auth/react"; 
 import {
   ShoppingBag, Heart, Star, PackagePlus,
   Users, ShieldCheck, LayoutDashboard, LogOut,
@@ -12,10 +12,9 @@ import Logo from "@/components/common/Logo";
 
 const Sidebar = ({ setOpen }) => {
   const pathname = usePathname();
-  const { data: session } = useSession(); // ২. সেশন থেকে রোল নিন
+  const { data: session } = useSession(); 
   const role = session?.user?.role || "user";
 
-  // ৩. মেনুগুলোকে আলাদাভাবে ডিফাইন করা
   const menuConfig = {
     admin: [
       { label: "Administration", type: "heading" },
@@ -24,7 +23,7 @@ const Sidebar = ({ setOpen }) => {
     ],
     vendor: [
       { label: "Vendor Management", type: "heading" },
-      { name: "Order Requests", href: "/dashboard/manage-requests", icon: Layers },
+      { name: "Order Requests", href: "/dashboard/vendor/manage-requests", icon: Layers },
       { name: "Add Product", href: "/dashboard/vendor/add-product", icon: PackagePlus },
       { name: "Inventory", href: "/dashboard/vendor/inventory", icon: ShoppingBag },
     ],
@@ -42,7 +41,6 @@ const Sidebar = ({ setOpen }) => {
     { name: "Analytics", href: "/dashboard/analytics", icon: LayoutDashboard },
   ];
 
-  // ৪. রোল অনুযায়ী মেনু ফিল্টার করা
   const activeMenuItems = [...sharedItems, ...(menuConfig[role] || menuConfig.user)];
 
   return (
