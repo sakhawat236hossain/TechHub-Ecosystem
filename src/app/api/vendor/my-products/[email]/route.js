@@ -4,7 +4,7 @@ import { dbConnect, collections } from "@/lib/dbConnect";
 export async function GET(req, { params }) {
   try {
     const { email } = await params;
-    const ordersCollection = await dbConnect(collections.ORDERS);
+    const ordersCollection = await dbConnect(collections.PRODUCTS);
     
     const requests = await ordersCollection
       .find({ sellerEmail: email })

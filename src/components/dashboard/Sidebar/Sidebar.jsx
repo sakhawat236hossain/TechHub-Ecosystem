@@ -25,7 +25,7 @@ const Sidebar = ({ setOpen }) => {
       { label: "Vendor Management", type: "heading" },
       { name: "Order Requests", href: "/dashboard/vendor/manage-requests", icon: Layers },
       { name: "Add Product", href: "/dashboard/vendor/add-product", icon: PackagePlus },
-      { name: "Inventory", href: "/dashboard/vendor/inventory", icon: ShoppingBag },
+      { name: "Inventory", href: "/dashboard/vendor/my-products", icon: ShoppingBag },
     ],
     user: [
       { label: "User Features", type: "heading" },

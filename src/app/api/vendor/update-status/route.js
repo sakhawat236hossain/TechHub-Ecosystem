@@ -7,7 +7,6 @@ export async function PATCH(req) {
     const { orderId, newStatus } = await req.json();
     const ordersCollection = await dbConnect(collections.ORDERS);
 
-    // ১. স্ট্যাটাস আপডেট করা (accepted/rejected)
     const result = await ordersCollection.updateOne(
       { _id: new ObjectId(orderId) },
       { $set: { status: newStatus } }
