@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useSession } from "next-auth/react"; // ইউজারের ডাটা পাওয়ার জন্য
+import { useSession } from "next-auth/react"; 
 import {
   PackagePlus,
   UploadCloud,
@@ -22,7 +22,7 @@ import {
 import { uploadImageToCloudinary } from "@/utils";
 
 const AddProductForm = () => {
-  const { data: session } = useSession(); // লগইন করা ইউজারের সেশন ডাটা
+  const { data: session } = useSession(); 
   const [loading, setLoading] = useState(false);
 
   const {
@@ -54,6 +54,8 @@ const AddProductForm = () => {
     "Networking Devices",
     "Storage (SSD/HDD)",
     "Peripherals (Keyboard/Mouse)",
+    "Mouse",
+    
   ];
 
   // --- Main Submit Logic ---
