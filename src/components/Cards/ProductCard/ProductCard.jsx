@@ -29,8 +29,8 @@ const ProductCard = ({ product }) => {
           ৳{product.price.toLocaleString()}
         </p>
 
-        <Link href={`/products/${product._id}`}>
-          <button className="bg-blue-600 hover:bg-black text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
+        <Link href={`/products/${product._id}` } className="block mt-4 ">
+          <button className="bg-blue-600 cursor-pointer hover:bg-black text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
             View Details
           </button>
         </Link>
