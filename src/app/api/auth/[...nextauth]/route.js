@@ -31,7 +31,7 @@ export const authOptions = {
         if (!isPasswordValid) {
           throw new Error("Invalid password");
         }
-j
+
         return {
           id: user._id.toString(),
           name: user.name,
@@ -41,18 +41,15 @@ j
         };
       },
     }),
-
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
-
   callbacks: {
     async signIn({ user, account }) {
       if (account.provider === "google" || account.provider === "github") {
@@ -79,28 +76,22 @@ j
       }
       return true;
     },
-
     async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
-        
         const userCollection = await dbConnect(collections.USERS);
         const dbUser = await userCollection.findOne({ email: token.email });
-        
         if (dbUser) {
           token.role = dbUser.role || "user";
         } else {
           token.role = user.role || "user";
         }
       }
-
       if (trigger === "update" && session?.role) {
         token.role = session.role;
       }
-
       return token;
     },
-
     async session({ session, token }) {
       if (session.user) {
         session.user.role = token.role; 
@@ -109,14 +100,9 @@ j
       return session;
     },
   },
-
-  session: {
-    strategy: "jwt",
-  },
+  session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/login",
-  },
+  pages: { signIn: "/login" },
 };
 
 const handler = NextAuth(authOptions);
