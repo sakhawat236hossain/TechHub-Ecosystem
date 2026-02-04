@@ -24,3 +24,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.navbar-dashboard-btn {
+  letter-spacing: 0.12em;
+}
